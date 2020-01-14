@@ -133,8 +133,17 @@ class Captcha
     {
         $this->configure();
 
+        $text = $this->randomText();
+
+        $text_box = imagettfbbox($this->size, -5,$this->font, $text);
+        $text_width = $text_box[2]-$text_box[0];
+        $text_height = $text_box[7]-$text_box[1];
+
+        $x = ($this->width/2) - ($text_width/2);
+        $y = ($this->height/2) - ($text_height/2);
+
         imagefilledrectangle($this->img, 0, 0, $this->width, $this->height, $this->backColor);
-        imagettftext($this->img, $this->size, -5, 10, 40, $this->fontColor, $this->font, $this->randomText());
+        imagettftext($this->img, $this->size, -5, $x, $y, $this->fontColor, $this->font, $text);
         header('Content-type: image/png');
         imagepng($this->img);
     }
