@@ -80,8 +80,8 @@ class Captcha
             }
         }
         $this->img = imagecreatetruecolor($this->width, $this->height);
-        $this->backColor = imagecolorallocate($this->img, 255, 255, 255); //white
-        $this->fontColor = imagecolorallocate($this->img, $this->hex2rgb()[0], $this->hex2rgb()[1], $this->hex2rgb()[2]);
+        $this->backColor = imagecolorallocate($this->img, $this->hex2rgb($this->backColor)[0], $this->hex2rgb($this->backColor)[1], $this->hex2rgb($this->backColor)[2]); //white
+        $this->fontColor = imagecolorallocate($this->img, $this->hex2rgb($this->fontColor)[0], $this->hex2rgb($this->fontColor)[1], $this->hex2rgb($this->fontColor)[2]);
         $this->font = __DIR__.'/../assets/font/arial.ttf';
     }
 
@@ -108,9 +108,9 @@ class Captcha
      *
      * @return array
      */
-    protected function hex2rgb()
+    protected function hex2rgb($color)
     {
-        $hex = str_replace('#', '', $this->fontColor);
+        $hex = str_replace('#', '', $color);
 
         if (strlen($hex) == 3) {
             $r = hexdec(substr($hex, 0, 1).substr($hex, 0, 1));
